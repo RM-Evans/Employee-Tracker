@@ -1,20 +1,20 @@
 
 const seedFiles = ['schema.sql', 'seeds.sql']
 
-// how we interact with our database
-const dao = require('./db/db')
+// low level db interface (use dao for app needs)
+const db = require('./db/db')
 // what will drive the CLI
 const cli = require('./src/cli')
 
 async function run(){
-    await dao.query("SET foreign_key_checks = 0")
-    await dao.query("drop table if exists department,role,employee")
-    await dao.query("SET foreign_key_checks = 1")
+    await db.query("SET foreign_key_checks = 0")
+    await db.query("drop table if exists department,role,employee")
+    await db.query("SET foreign_key_checks = 1")
 
-    await dao.verifySeeds(seedFiles)
+    await db.verifySeeds(seedFiles)
 
     await cli.loop()
-    await dao.close()
+    await db.close()
 }
 
 run()
