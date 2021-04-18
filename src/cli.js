@@ -28,7 +28,6 @@ module.exports = {
             }
             console.log('\n\n') // new lines for clear space
         }while(selection.menu != 'exit')
-        await dao.close()
     },
 
     async employees(){
@@ -41,6 +40,7 @@ module.exports = {
     },
 
     async employeesByDept(){
+        const where = await prompt.promptDepartment()
         const employees = await dao.employees(null, where)
         if( employees.length ){
             console.table(employees)
