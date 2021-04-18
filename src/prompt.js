@@ -1,6 +1,5 @@
 const inquirer = require('inquirer');
 
-
 const dao = require('../db/dao')
 
 const main = [{
@@ -51,21 +50,21 @@ function daoChoices(fn, labelProp){
     }
 }
 
-const promptEmployee = (name, message) => ({
+const askEmployeePrompt = (name, message) => ({
     name,
     message,
     type: 'list',
     choices: daoChoices(() => dao.employees(), 'name')
 })
 
-const promptRole = {
+const askRolePrompt = {
     name: 'role_id',
     message: 'What role?',
     type: 'list',
     choices: daoChoices(() => dao.roles(), 'title')
 }
 
-const promptDepartment = {
+const askDepartmentPrompt = {
     name: 'department_id',
     message: 'What Department?',
     type: 'list',
@@ -73,7 +72,7 @@ const promptDepartment = {
 }
 
 
-const addEmployee = [
+const addEmployeePrompts = [
     {
         name: 'first_name',
         type: 'input',
@@ -84,13 +83,13 @@ const addEmployee = [
         type: 'input',
         message: 'Enter employees last name: '
     },
-    promptRole,
-    promptEmployee('manager_id', 'Manager')
+    askRolePrompt,
+    askEmployeePrompt('manager_id', 'Manager')
 ]
 
 
 
-const addDepartment = [
+const addDepartmentPrompts = [
     {
         name: 'name',
         type: 'input',
@@ -99,7 +98,7 @@ const addDepartment = [
 ]
 
 
-const addRole = [
+const addRolePrompts = [
     {
         name: 'title',
         type: 'input',
@@ -110,22 +109,22 @@ const addRole = [
         type: 'input',
         message: 'Enter role salary (numeric only please): '
     },
-    promptDepartment
+    askDepartmentPrompt
 ]
 
 
 
-function employeeUpdate(props = []){
+function updateEmployeePrompts(props = []){
     const questions = [
-        promptEmployee('userId', 'Which employee would you like to update?')
+        askEmployeePrompt('userId', 'Which employee would you like to update?')
     ]
 
     if( props.find(e => e === 'role') ){
-        questions.push(promptRole)
+        questions.push(askRolePrompt)
     }
 
     if( props.find(e => e === 'manager') ){
-        questions.push(promptEmployee('managerId', 'Which employee would you like to update?'))
+        questions.push(askEmployeePrompt('managerId', 'Which employee would you like to update?'))
     }
 
     return questions
@@ -133,29 +132,29 @@ function employeeUpdate(props = []){
 
 module.exports = {
     promptEmployee(...args){
-        return inquirer.prompt(promptEmployee(...args))
+        return inquirer.prompt(askEmployeePrompt(...args))
     },
     promptDepartment(){
-        return inquirer.prompt(promptDepartment)
+        return inquirer.prompt(askDepartmentPrompt)
     },
     async menu(){
         const result = inquirer.prompt(main)
         return result
     },
     async addEmployee(){
-        const result = inquirer.prompt(addEmployee)
+        const result = inquirer.prompt(addEmployeePrompts)
         return result
     },
     async addRole(){
-        const result = inquirer.prompt(addRole)
+        const result = inquirer.prompt(addRolePrompts)
         return result
     },
     async addDepartment(){
-        const result = inquirer.prompt(addDepartment)
+        const result = inquirer.prompt(addDepartmentPrompts)
         return result
     },
     async updateEmployee(props){
-        const result = inquirer.prompt(employeeUpdate(props))
+        const result = inquirer.prompt(updateEmployeePrompts(props))
         return result
     }
 }
