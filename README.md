@@ -2,22 +2,18 @@
 
 ## Description
 
-
+An application that lets you manage employees, employee roles, salaries, and managers.
 
 ## Table of Contents
 
-- [Deployed](#deployed)
-- [Functionality](#functionality)
+- [Demo](#demo)
 - [Credits](#credits)
 - [Technologies](#technologies)
 - [Questions](#questions)
 
-## Deployed
+## Demo
 
-
-
-## Functionality
-
+https://drive.google.com/file/d/1pFnldB1E4LoyBSq3MY8fvt5idSyvm36k/view
 
 ## Credits
 
